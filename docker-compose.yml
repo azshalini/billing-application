@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  API:
+    image: billing-application:1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /Users/karan/Develop/billing-application
+    ports:
+      - "8191:8191"
+    depends_on:
+      - mysqldb
+    networks:
+      - a2z-network
+
+  mysqldb:
+    image: karana2z/billingdb
+    ports:
+      - "3306:3306"
+    networks:
+      - a2z-network
+    environment:
+      - MYSQL_USER=a2zadmin
+      - MYSQL_ROOT_PASSWORD=Password10$
+      - MYSQL_DATABASE=billingdb
+networks:
+  a2z-network:
